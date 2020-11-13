@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/wpusermatcher</path>
+    <page_callback>CRM_Wpmatcher_Form_UserMatcher</page_callback>
+    <title>UserMatcher</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+</menu>
