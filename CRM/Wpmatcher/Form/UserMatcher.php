@@ -65,8 +65,8 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
     ];
 
     foreach ($this->wpInternUsers as $wpInternUser) {
-      $fieldName = 'intern_' . $wpInternUser['id'];
-      $label = $wpInternUser['user_email'] . ' (' . $wpInternUser['user_nicename'] . ')';
+      $fieldName = 'intern_' . $wpInternUser->id;
+      $label = $wpInternUser->user_email . ' (' . $wpInternUser->user_nicename . ')';
       $this->addEntityRef($fieldName, $label , $select2Properties);
     }
   }
@@ -86,9 +86,9 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
     $civiContact = new CRM_Wpmatcher_CiviContact();
 
     foreach ($this->wpInternUsers as $wpInternUser) {
-      $contactId = $civiContact->getContactIdFromWpId($wpInternUser['id']);
+      $contactId = $civiContact->getContactIdFromWpId($wpInternUser->id);
       if ($contactId) {
-        $fieldName = 'intern_' . $wpInternUser['id'];
+        $fieldName = 'intern_' . $wpInternUser->id;
         $defaults[$fieldName] = $contactId;
       }
     }
