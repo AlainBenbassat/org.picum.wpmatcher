@@ -3,11 +3,11 @@
 use CRM_Wpmatcher_ExtensionUtil as E;
 
 class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
-  private $wpInternUsers;
+  private $wpUsers;
 
   public function buildQuickForm() {
-    $this->getWpInternUsers();
-    $this->addWpInternsToForm();
+    $this->getWpUsers();
+    $this->addWpUsersToForm();
     $this->fillMatchingContactIds();
     $this->addButtonsToForm();
 
@@ -45,9 +45,9 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
     $values = $this->exportValues();
 
     foreach ($values as $k => $civiContactId) {
-      if (strpos($k, 'intern_') === 0) {
+      if (strpos($k, 'contact_') === 0) {
         // extract the id
-        $wordpressId = substr($k, strlen('intern_'));
+        $wordpressId = substr($k, strlen('contact_'));
         $userMatcher[$wordpressId] = $civiContactId;
       }
     }
@@ -55,7 +55,7 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
     return $userMatcher;
   }
 
-  private function addWpInternsToForm() {
+  private function addWpUsersToForm() {
     $select2Properties = [
       'api' => [
         'params' => [
@@ -64,9 +64,9 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
       ],
     ];
 
-    foreach ($this->wpInternUsers as $wpInternUser) {
-      $fieldName = 'intern_' . $wpInternUser->id;
-      $label = $wpInternUser->user_email . ' (' . $wpInternUser->user_nicename . ')';
+    foreach ($this->wpUsers as $wpUser) {
+      $fieldName = 'contact_' . $wpUser->id;
+      $label = $wpUser->user_email . ' (' . $wpUser->user_nicename . ')';
       $this->addEntityRef($fieldName, $label , $select2Properties);
     }
   }
@@ -85,10 +85,10 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
     $defaults = [];
     $civiContact = new CRM_Wpmatcher_CiviContact();
 
-    foreach ($this->wpInternUsers as $wpInternUser) {
-      $contactId = $civiContact->getContactIdFromWpId($wpInternUser->id);
+    foreach ($this->wpUsers as $wpUser) {
+      $contactId = $civiContact->getContactIdFromWpId($wpUser->id);
       if ($contactId) {
-        $fieldName = 'intern_' . $wpInternUser->id;
+        $fieldName = 'contact_' . $wpUser->id;
         $defaults[$fieldName] = $contactId;
       }
     }
@@ -96,9 +96,9 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
     $this->setDefaults($defaults);
   }
 
-  private function getWpInternUsers() {
+  private function getWpUsers() {
     $wpUser = new CRM_Wpmatcher_WpUser();
-    $this->wpInternUsers = $wpUser->getAllInternUsers();
+    $this->$wpUser = $wpUser->getAllUsers();
   }
 
   public function getRenderableElementNames() {
