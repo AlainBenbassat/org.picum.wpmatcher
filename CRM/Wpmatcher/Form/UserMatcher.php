@@ -98,7 +98,7 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
 
   private function getWpUsers() {
     $wpUser = new CRM_Wpmatcher_WpUser();
-    $this->$wpUser = $wpUser->getAllUsers();
+    $this->wpUser = $wpUser->getAllUsers();
   }
 
   public function getRenderableElementNames() {
