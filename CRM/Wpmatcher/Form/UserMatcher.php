@@ -66,7 +66,7 @@ class CRM_Wpmatcher_Form_UserMatcher extends CRM_Core_Form {
 
     foreach ($this->wpUsers as $wpUser) {
       $fieldName = 'contact_' . $wpUser->id;
-      $label = $wpUser->user_email . ' (' . $wpUser->user_nicename . ')';
+      $label = $wpUser->user_login . ' (' . $wpUser->display_name . ', ' . $wpUser->user_email . ')';
       $this->addEntityRef($fieldName, $label , $select2Properties);
     }
   }
